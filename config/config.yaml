@@ -1,0 +1,52 @@
+dataset:
+  raw_train: data/raw/bugfixes_train.pickle
+  raw_valid: data/raw/bugfixes_valid.pickle
+  merged_parquet: data/bugfixes_full_merged.parquet
+  filtered_jsonl: outputs/filtered_with_ids.jsonl
+  function_ids_npy: outputs/function_ids.npy
+  tokenized_jsonl: outputs/tokenized_code.jsonl
+
+filtering:
+  max_entries: 0                # 0 = no cap
+  top_bug_types: 26
+
+embedding:
+  models:
+    - openai-large
+    - codebert
+    - graphcodebert
+    - codet5
+    - bge
+    - unixcoder
+    - openai-small
+  batch_size: 64
+  output_dir: outputs/embeddings
+
+clustering:
+  k_values_bugtype: [26, 52, 78, 104, 130]
+  k_values_ast: [11, 22, 33, 44, 55]
+  k_values_lda: [10, 20, 30, 40, 50]
+  k_values_length: [3, 6, 9, 12, 15]
+  algorithms: [kmeans, agglomerative]
+  n_seeds: 5
+  output_dir: outputs/clustering
+
+lda:
+  scenarios: [name_params, docstring, full_body]
+  topic_counts: [10, 20, 30]
+  dominant_threshold: 0.45
+  output_dir: outputs/lda
+
+extended_eval:
+  default_signature: str
+  embedding_model: openai-large
+  clustering_algo: affinity_propagation
+  n_runs: 10
+  gpt_model: gpt-4o-mini
+  min_tests_per_function: 3
+  output_dir: outputs/extended_eval
+
+evaluation:
+  n_random_baseline_runs: 100
+  random_seed: 42
+  significance_threshold: 0.05
