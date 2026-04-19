@@ -1,0 +1,23 @@
+# Virtual environment
+.venv/
+
+# Generated outputs (large files)
+outputs/
+
+# API keys — never commit
+local_config.py
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Mac
+.DS_Store
+
+# PyCharm
+.idea/
+
+# Large data files
+data/raw/*.pickle
+data/*.parquet
